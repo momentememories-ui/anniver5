@@ -69,14 +69,16 @@
         }
         .clock-val { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
 
-        /* --- Photo Grid --- */
+        /* --- Photo Grid (FIXED ASPECT RATIO) --- */
         .heart-grid { 
             display: grid; 
-            grid-template-columns: repeat(5, minmax(60px, 15vw)); 
-            grid-template-rows: repeat(5, minmax(60px, 15vh)); 
-            gap: 2vmin; margin: 0 auto;
-            max-width: 90vw; max-height: 80vh;
-            justify-content: center; align-content: center;
+            /* ปรับเป็น 17vmin เพื่อให้เป็นสี่เหลี่ยมจัตุรัสและสมส่วนกับหน้าจอ */
+            grid-template-columns: repeat(5, 17vmin); 
+            grid-template-rows: repeat(5, 17vmin); 
+            gap: 1.5vmin; 
+            margin: 0 auto;
+            justify-content: center; 
+            align-content: center;
         }
         .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s; }
         .img-item:active { transform: scale(0.95); }
@@ -86,8 +88,10 @@
         .p3 { grid-column: 1; grid-row: 2; } .p4 { grid-column: 2; grid-row: 2; }
         .p5 { grid-column: 3; grid-row: 2; } .p6 { grid-column: 4; grid-row: 2; }
         .p7 { grid-column: 5; grid-row: 2; } .p8 { grid-column: 2; grid-row: 3; }
-        .p9 { grid-column: 3; grid-row: 4; } .p10 { grid-column: 4; grid-row: 3; }
+        .p9 { grid-column: 3; grid-row: 5; } .p10 { grid-column: 4; grid-row: 3; }
         .p11 { grid-column: 3; grid-row: 3; }
+        /* เพิ่มตำแหน่งแถวที่ 4 เพื่อให้หัวใจดูเรียวลงและไม่สั้นเกินไป */
+        .p9_extra { grid-column: 3; grid-row: 4; display: none; } /* Reserve spot */
 
         /* --- Envelope & Paper --- */
         .envelope-container { position: relative; height: 450px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
@@ -187,9 +191,9 @@
                     <img src="photo6.jpg" class="img-item p6" onclick="zoomImg(this, 'สาวหวานน')">
                     <img src="photo7.jpg" class="img-item p7" onclick="zoomImg(this, 'โอ้ะน่าร้ากก')">
                     <img src="photo8.jpg" class="img-item p8" onclick="zoomImg(this, 'มีกำลังใจสอบระะ')">
-                    <img src="photo9.jpg" class="img-item p9" onclick="zoomImg(this, 'โอัะโอ่วว')">
-                    <img src="photo10.jpg" class="img-item p10" onclick="zoomImg(this, 'ปัดเป๋เรยย')">
                     <img src="photo11.jpg" class="img-item p11" onclick="zoomImg(this, 'ม่ายรับรุ้')">
+                    <img src="photo10.jpg" class="img-item p10" onclick="zoomImg(this, 'ปัดเป๋เรยย')">
+                    <img src="photo9.jpg" class="img-item p9" onclick="zoomImg(this, 'โอัะโอ่วว')">
                 </div>
             </section>
 
@@ -292,7 +296,6 @@
             }, 1000);
         }
 
-        // เอฟเฟกต์หัวใจลอยขึ้นมาตอนดูรูป
         function startFloatingHearts() {
             const container = document.getElementById('modal');
             const interval = setInterval(() => {
@@ -329,7 +332,7 @@
         function openLetter() {
             document.getElementById('env').classList.add('open');
             document.getElementById('env-text').style.opacity = '0';
-            const msg = "ไม่ต้องเก่งมากก็ได้ค่อยๆเติบโตไปพร้อมกัน\nเค้าจะคอยอยู่ข้างๆเธอเอง\nเธอหันมาก็จะเจอเค้าตลอดเลยนะ\nเค้าจะคอยซัพพอร์ตเธอในทุกๆเรื่อง\nจะไม่ปล่อยให้เธอต้องอยู่คนเดียว\nจะไม่ทำให้เธอต้องลำบากใจ\nจะคอยเป็นที่ระบายอารมณ์ให้เธอ\nเค้าคนนี้จะคอยอยู่ข้างๆเธอไปตลอดเองนะคะ\nตั้งแต่วันแรกจนถึงวันนี้ไม่เคยรู้สึก\nไม่โชคดีที่ได้เจอแต่กลับเป็นความโชคดี\nที่ไม่อยากให้หายไปไหนเลยอยู่ให้รักนานๆเลยนะ\nผ่านอะไรอีกหลายๆอย่างที่เรา ต้องเจอ\nในทางข้างหน้าไปด้วยกันนะ\nขอบคุณเธอที่เข้ามานะคะ\nเค้ารักเธอมาตลอดเลยก่อนรู้จักชื่อซะอีก\nเค้าขอให้เเฟนยิ้มเย้อๆ\nอวดแฟนสวยมากเรยนะคะ\nแย่จางงวันครบนี่ไม่ได้ยุด้วยกัน\nเเต่ยังรักเหมือเดอมนะคะะมากกว่าเดิมอีกก\nอย่าคิดว่าเค้าไม่รักเลยนะคะะ\nเค้ารักเธอที่สุดแล้วค่ะะ\n”กานต์สิริ..”🫠";
+            const msg = "ไม่ต้องเก่งมากก็ได้ค่อยๆเติบโตไปพร้อมกัน\nเค้าจะคอยอยู่ข้างๆเธอเอง\nเธอหันมาก็จะเจอเค้าตลอดเลยนะ\nเค้าจะคอยซัพพอร์ตเธอในทุกๆเรื่อง\nจะไม่ปล่อยให้เธอต้องอยู่คนเดียว\nจะไม่ทำให้เธอต้องลำบากใจ\nจะคอยเป็นที่ระบายอารมณ์ให้เธอ\nเค้าคนนี้จะคอยอยู่ข้างๆเธอไปตลอดเองนะคะ\nตั้งแต่วันแรกจนถึงวันนี้ไม่เคยรู้สึก\nไม่โชคดีที่ได้เจอแต่กลับเป็นความโชคดี\nที่ไม่อยากให้หายไปไหนเลยอยู่ให้รักนานๆเลยนะ\nผ่านอะไรอีกหลายๆอย่างที่เรา ต้องเจอ\nในทางข้างหน้าไปด้วยกันนะ\nขอบคุณเธอที่เข้ามานะคะ\nเค้ารักเธอมาตลอดเลยก่อนรู้จักชื่อซะอีก\nเค้าขอให้เเฟนยิ้มเย้อๆ\nยิ้มแฟนสวยมากเรยนะคะ\nแย่จางงวันครบนี่ไม่ได้ยุด้วยกัน\nเเต่ยังรักเหมือเดอมนะคะะมากกว่าเดิมอีกก\nอย่าคิดว่าเค้าไม่รักเลยนะคะะ\nเค้ารักเธอที่สุดแล้วค่ะะ\n”กานต์สิริ..”🫠";
             let i = 0;
             if(document.getElementById('typewriter').innerHTML === "") {
                 function type() {
