@@ -69,11 +69,11 @@
         }
         .clock-val { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
 
-        /* --- Photo Grid (TARGETED HEART SHAPE) --- */
+        /* --- Photo Grid (REFINED HEART SHAPE 10-COL) --- */
         .heart-grid { 
             display: grid; 
-            grid-template-columns: repeat(5, 17vmin); 
-            grid-template-rows: repeat(6, 17vmin); 
+            grid-template-columns: repeat(10, 8vmin); 
+            grid-template-rows: repeat(5, 17vmin); 
             gap: 1.5vmin; 
             margin: 0 auto;
             justify-content: center; 
@@ -82,27 +82,29 @@
         .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s; }
         .img-item:active { transform: scale(0.95); }
         
-        /* Heart Positions (2-5-3-2-1) */
-        /* Row 1: OK */
-        .p1 { grid-column: 2; grid-row: 1; } .p2 { grid-column: 4; grid-row: 1; }
-        /* Row 2: OK */
-        .p3 { grid-column: 1; grid-row: 2; } .p4 { grid-column: 2; grid-row: 2; }
-        .p5 { grid-column: 3; grid-row: 2; } .p6 { grid-column: 4; grid-row: 2; }
-        .p7 { grid-column: 5; grid-row: 2; } 
-        /* Row 3: OK */
-        .p8 { grid-column: 2; grid-row: 3; } 
-        .p11 { grid-column: 3; grid-row: 3; } 
-        .p10 { grid-column: 4; grid-row: 3; }
+        /* ตำแหน่งรูปภาพ (2-5-3-2-1) */
+        /* แถว 1: 2 รูป */
+        .p1 { grid-column: 3 / 5; grid-row: 1; } 
+        .p2 { grid-column: 7 / 9; grid-row: 1; }
         
-        /* Row 4: [RED] Two new photos (12, 13) */
-        .p12 { grid-column: 2; grid-row: 4; } /* Left red spot */
-        .p13 { grid-column: 4; grid-row: 4; } /* Right red spot */
+        /* แถว 2: 5 รูป */
+        .p3 { grid-column: 1 / 3; grid-row: 2; } 
+        .p4 { grid-column: 3 / 5; grid-row: 2; }
+        .p5 { grid-column: 5 / 7; grid-row: 2; } 
+        .p6 { grid-column: 7 / 9; grid-row: 2; }
+        .p7 { grid-column: 9 / 11; grid-row: 2; } 
         
-        /* Row 5: [GREEN] One photo (9) at tip */
-        .p9 { grid-column: 3; grid-row: 5; } /* Lower green tip */
+        /* แถว 3: 3 รูป */
+        .p8 { grid-column: 2 / 4; grid-row: 3; } 
+        .p11 { grid-column: 5 / 7; grid-row: 3; } 
+        .p10 { grid-column: 8 / 10; grid-row: 3; }
         
-        /* Dummy spot to maintain grid spacing */
-        .grid-dummy { grid-column: 3; grid-row: 6; visibility: hidden; }
+        /* แถว 4: 2 รูป ชิดกันตรงกลาง */
+        .p12 { grid-column: 4 / 6; grid-row: 4; } 
+        .p13 { grid-column: 6 / 8; grid-row: 4; }
+        
+        /* แถว 5: 1 รูป ปลายหัวใจ */
+        .p9 { grid-column: 5 / 7; grid-row: 5; }
 
         /* --- Envelope & Paper --- */
         .envelope-container { position: relative; height: 450px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
@@ -113,38 +115,16 @@
         .paper { position: absolute; top: 10px; left: 10px; width: 220px; height: 130px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .envelope.open .paper { transform: translateY(-220px); height: 380px; width: 300px; left: -30px; z-index: 15; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
 
-        /* ข้อความอยู่ด้านล่างซองจดหมาย */
         .tap-text { font-size: 0.9rem; color: var(--primary); margin-top: 15px; animation: bounce 1.5s infinite; font-weight: 500; z-index: 11; position: relative; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 
         /* --- Gift Boxes --- */
         .boxes-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; max-width: 300px; margin: 0 auto; }
-        
-        /* อนิเมชั่นเขย่าเล็กน้อยตลอดเวลา */
-        .gift-box { 
-            font-size: 65px; cursor: pointer; display: inline-block; 
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); 
-            animation: gentle-shake 2s ease-in-out infinite; /* เขย่าตลอดเวลา */
-            transition: transform 0.2s;
-        }
-        .gift-box:active { transform: scale(0.9) rotate(0deg) !important; animation: none; }
-
-        @keyframes gentle-shake {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(3deg); }
-            50% { transform: rotate(-3deg); }
-            75% { transform: rotate(2deg); }
-        }
-
-        /* อนิเมชั่นตอนกดเลือก (แรงขึ้น) */
+        .gift-box { font-size: 65px; cursor: pointer; display: inline-block; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); animation: gentle-shake 2s ease-in-out infinite; transition: transform 0.2s; }
+        .gift-box:active { transform: scale(0.9); animation: none; }
+        @keyframes gentle-shake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(3deg); } 50% { transform: rotate(-3deg); } 75% { transform: rotate(2deg); } }
         .box-selected-shake { animation: box-selected-shake 0.8s ease-in-out; }
-        @keyframes box-selected-shake {
-            0%, 100% { transform: scale(1) rotate(0); }
-            20% { transform: scale(1.1) rotate(15deg); }
-            40% { transform: scale(1.1) rotate(-15deg); }
-            60% { transform: scale(1.1) rotate(10deg); }
-            80% { transform: scale(1.1) rotate(-10deg); }
-        }
+        @keyframes box-selected-shake { 0%, 100% { transform: scale(1) rotate(0); } 20% { transform: scale(1.1) rotate(15deg); } 40% { transform: scale(1.1) rotate(-15deg); } 60% { transform: scale(1.1) rotate(10deg); } 80% { transform: scale(1.1) rotate(-10deg); } }
 
         /* --- Modal & UI --- */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0); backdrop-filter: blur(0px); z-index: 10000; align-items: center; justify-content: center; transition: background 0.4s ease, backdrop-filter 0.4s ease; overflow: hidden; }
@@ -154,28 +134,20 @@
 
         .polaroid { background: white; padding: 12px 12px 50px 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border-radius: 2px; max-width: 280px; position: relative; }
         .polaroid img { width: 100%; height: auto; border: 1px solid #f9f9f9; }
-        .polaroid-text { font-family: 'Kanit', sans-serif; font-size: 1rem; color: #666; margin-top: 15px; text-align: center; font-weight: 400; }
+        .polaroid-text { font-family: 'Kanit', sans-serif; font-size: 1rem; color: #666; margin-top: 15px; text-align: center; }
         
         .ticket { width: 280px; background: white; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); border: 2px solid var(--primary); overflow: hidden; }
         .ticket-header { background: var(--primary); color: white; padding: 10px; font-size: 0.7rem; font-weight: 600; text-align: center; }
         .ticket-content { padding: 30px 20px; border-bottom: 2.5px dashed var(--secondary); text-align: center; }
-        .ticket-prize { font-size: 1.1rem; font-weight: 600; color: var(--primary); margin: 5px 0; }
+        .ticket-prize { font-size: 1.1rem; font-weight: 600; color: var(--primary); }
         .ticket-footer { font-size: 0.55rem; color: #bbb; padding: 8px; text-align: center; }
 
         nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.95); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         nav a { text-decoration: none; font-size: 24px; }
-        .btn-close { background: var(--primary); color: white; border: none; padding: 12px 35px; border-radius: 30px; cursor: pointer; margin-top: 25px; font-family: 'Prompt'; font-weight: 600; box-shadow: 0 4px 15px rgba(255, 143, 163, 0.4); }
+        .btn-close { background: var(--primary); color: white; border: none; padding: 12px 35px; border-radius: 30px; cursor: pointer; margin-top: 25px; font-family: 'Prompt'; font-weight: 600; }
         
-        /* Floating Hearts Animation */
-        .floating-heart {
-            position: absolute; color: #ff8fa3; opacity: 0.8; pointer-events: none;
-            z-index: 10001; animation: floatUp 3s linear forwards;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) translateX(var(--random-x)) scale(1.5); opacity: 0; }
-        }
+        .floating-heart { position: absolute; color: #ff8fa3; opacity: 0.8; pointer-events: none; z-index: 10001; animation: floatUp 3s linear forwards; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0.5); opacity: 0; } 20% { opacity: 0.8; } 100% { transform: translateY(-10vh) translateX(var(--random-x)) scale(1.5); opacity: 0; } }
     </style>
 </head>
 <body id="body-content">
@@ -226,8 +198,6 @@
                     <img src="photo12.jpg" class="img-item p12" onclick="zoomImg(this, 'รักกก')">
                     <img src="photo13.jpg" class="img-item p13" onclick="zoomImg(this, 'ที่สุด')">
                     <img src="photo9.jpg" class="img-item p9" onclick="zoomImg(this, 'โอัะโอ่วว')">
-                    
-                    <div class="grid-dummy"></div>
                 </div>
             </section>
 
@@ -330,14 +300,10 @@
             }, 1000);
         }
 
-        // เอฟเฟกต์หัวใจลอยขึ้นมาตอนดูรูป
         function startFloatingHearts() {
             const container = document.getElementById('modal');
             const interval = setInterval(() => {
-                if(!container.classList.contains('active')) {
-                    clearInterval(interval);
-                    return;
-                }
+                if(!container.classList.contains('active')) { clearInterval(interval); return; }
                 const heart = document.createElement('div');
                 heart.className = 'floating-heart';
                 heart.innerHTML = '❤️';
@@ -355,18 +321,14 @@
             document.getElementById('coupon-area').style.display = 'none';
             document.getElementById('modal-img').src = el.src;
             document.getElementById('img-caption').innerText = caption;
-            
             document.getElementById('body-content').classList.add('modal-active');
             document.getElementById('modal').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('modal').classList.add('active');
-                startFloatingHearts();
-            }, 10);
+            setTimeout(() => { document.getElementById('modal').classList.add('active'); startFloatingHearts(); }, 10);
         }
 
         function openLetter() {
             document.getElementById('env').classList.add('open');
-            document.getElementById('env-text').style.opacity = '0'; // ซ่อนข้อความเมื่อเปิดจดหมาย
+            document.getElementById('env-text').style.opacity = '0';
             const msg = "ไม่ต้องเก่งมากก็ได้ค่อยๆเติบโตไปพร้อมกัน\nเค้าจะคอยอยู่ข้างๆเธอเอง\nเธอหันมาก็จะเจอเค้าตลอดเลยนะ\nเค้าจะคอยซัพพอร์ตเธอในทุกๆเรื่อง\nจะไม่ปล่อยให้เธอต้องอยู่คนเดียว\nจะไม่ทำให้เธอต้องลำบากใจ\nจะคอยเป็นที่ระบายอารมณ์ให้เธอ\nเค้าคนนี้จะคอยอยู่ข้างๆเธอไปตลอดเองนะคะ\nตั้งแต่วันแรกจนถึงวันนี้ไม่เคยรู้สึก\nไม่โชคดีที่ได้เจอแต่กลับเป็นความโชคดี\nที่ไมยากให้หายไปไหนเลยอยู่ให้รักนานๆเลยนะ\nผ่านอะไรอีกหลายๆอย่างที่เรา ต้องเจอ\nในทางข้างหน้าไปด้วยกันนะ\nขอบคุณเธอที่เข้ามานะคะ\nเค้ารักเธอมาตลอดเลยก่อนรู้จักชื่อซะอีก\nเค้าขอให้เเฟนยิ้มเย้อๆ\nยิ้มแฟนสวยมากเรยนะคะ\nแย่จางงวันครบนี่ไม่ได้ยุด้วยกัน\nเเต่ยังรักเหมือเดอมนะคะะมากกว่าเดิมอีกก\nอย่าคิดว่าเค้าไม่รักเลยนะคะะ\nเค้ารักเธอที่สุดแล้วค่ะะ\n”กานต์สิริ..”🫠";
             let i = 0;
             if(document.getElementById('typewriter').innerHTML === "") {
@@ -383,38 +345,27 @@
 
         const prizes = ["ตามใจ 1 ชิ้น", "เจลลี่แคท", "ดอกไม้", "กล่องสุ่ม", "กล่องสุ่มดอกไม้เจลลี่เเคท"];
         function pickBox(el) {
-            if(el.innerText === "✨") return; // ป้องกันการกดซ้ำ
-            
-            // เปลี่ยนอนิเมชั่นเป็นแบบกดเลือก (แรงขึ้น) OK
-            el.style.animation = 'none'; // หยุดอนิเมชั่นเขย่าปกติ
-            el.offsetHeight; // Trigger reflow
+            if(el.innerText === "✨") return;
+            el.style.animation = 'none';
+            el.offsetHeight;
             el.classList.add('box-selected-shake');
-            
             setTimeout(() => {
                 const prize = prizes[Math.floor(Math.random()*prizes.length)];
                 document.getElementById('photo-area').style.display = 'none';
                 document.getElementById('coupon-area').style.display = 'block';
                 document.getElementById('coupon-text').innerText = prize;
-                
                 document.getElementById('body-content').classList.add('modal-active');
                 document.getElementById('modal').style.display = 'flex';
-                setTimeout(() => {
-                    document.getElementById('modal').classList.add('active');
-                    startFloatingHearts();
-                }, 10);
-
+                setTimeout(() => { document.getElementById('modal').classList.add('active'); startFloatingHearts(); }, 10);
                 el.classList.remove('box-selected-shake');
                 el.innerText = "✨";
-                // ไม่กลับไปเขย่าอีกหลังจากเปิดแล้ว
             }, 800);
         }
 
         function closeModal() {
             document.getElementById('modal').classList.remove('active');
             document.getElementById('body-content').classList.remove('modal-active');
-            setTimeout(() => {
-                document.getElementById('modal').style.display = 'none';
-            }, 400);
+            setTimeout(() => { document.getElementById('modal').style.display = 'none'; }, 400);
         }
     </script>
 </body>
