@@ -69,12 +69,12 @@
         }
         .clock-val { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
 
-        /* --- Photo Grid (FIXED ASPECT RATIO) --- */
+        /* --- Photo Grid (HEART SHAPE 13 IMAGES) --- */
         .heart-grid { 
             display: grid; 
-            /* ปรับเป็น 17vmin เพื่อให้เป็นสี่เหลี่ยมจัตุรัสและสมส่วนกับหน้าจอ */
-            grid-template-columns: repeat(5, 17vmin); 
-            grid-template-rows: repeat(5, 17vmin); 
+            /* ปรับเป็น 15vmin เพื่อให้รองรับ 13 รูปในทรงหัวใจที่สมบูรณ์ */
+            grid-template-columns: repeat(5, 15vmin); 
+            grid-template-rows: repeat(6, 15vmin); 
             gap: 1.5vmin; 
             margin: 0 auto;
             justify-content: center; 
@@ -83,20 +83,17 @@
         .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s; }
         .img-item:active { transform: scale(0.95); }
         
-        /* Heart Positions */
+        /* Heart Positions for 13 images */
         .p1 { grid-column: 2; grid-row: 1; } .p2 { grid-column: 4; grid-row: 1; }
         .p3 { grid-column: 1; grid-row: 2; } .p4 { grid-column: 2; grid-row: 2; }
         .p5 { grid-column: 3; grid-row: 2; } .p6 { grid-column: 4; grid-row: 2; }
-        .p7 { grid-column: 5; grid-row: 2; } .p8 { grid-column: 2; grid-row: 3; }
-        .p9 { grid-column: 3; grid-row: 5; } .p10 { grid-column: 4; grid-row: 3; }
-        .p11 { grid-column: 3; grid-row: 3; }
-        /* เพิ่มตำแหน่งแถวที่ 4 เพื่อให้หัวใจดูเรียวลงและไม่สั้นเกินไป */
-        .p9_extra { grid-column: 3; grid-row: 4; display: none; } /* Reserve spot */
+        .p7 { grid-column: 5; grid-row: 2; } .p8 { grid-column: 1; grid-row: 3; }
+        .p9 { grid-column: 2; grid-row: 3; } .p10 { grid-column: 3; grid-row: 3; }
+        .p11 { grid-column: 4; grid-row: 3; } .p12 { grid-column: 5; grid-row: 3; }
+        .p13 { grid-column: 3; grid-row: 4; } /* Tip of heart */
 
         /* --- Envelope & Paper --- */
         .envelope-container { position: relative; height: 450px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
-        .tap-text { font-size: 0.9rem; color: var(--primary); margin-bottom: 15px; animation: bounce 1.5s infinite; font-weight: 500; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
         
         .envelope { width: 240px; height: 150px; background: #ffc1cc; border-radius: 0 0 10px 10px; position: relative; cursor: pointer; z-index: 10; margin-top: 50px; transition: 0.3s; }
         .envelope::before { content: ''; position: absolute; top: -100px; left: 0; border-left: 120px solid transparent; border-right: 120px solid transparent; border-bottom: 100px solid #ff8fa3; transition: 0.5s; z-index: 12; transform-origin: bottom; }
@@ -104,11 +101,32 @@
         .paper { position: absolute; top: 10px; left: 10px; width: 220px; height: 130px; background: white; border-radius: 5px; transition: 0.7s; z-index: 5; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .envelope.open .paper { transform: translateY(-220px); height: 380px; width: 300px; left: -30px; z-index: 15; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
 
+        /* ข้อความอยู่ด้านล่างซองจดหมาย */
+        .tap-text { font-size: 0.9rem; color: var(--primary); margin-top: 15px; animation: bounce 1.5s infinite; font-weight: 500; z-index: 11; position: relative; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
         /* --- Gift Boxes --- */
         .boxes-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; max-width: 300px; margin: 0 auto; }
-        .gift-box { font-size: 65px; cursor: pointer; transition: 0.3s; display: inline-block; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
-        .box-shake { animation: box-shake 0.8s ease-in-out; }
-        @keyframes box-shake {
+        
+        /* อนิเมชั่นเขย่าเล็กน้อยตลอดเวลา */
+        .gift-box { 
+            font-size: 65px; cursor: pointer; display: inline-block; 
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); 
+            animation: gentle-shake 2s ease-in-out infinite; /* เขย่าตลอดเวลา */
+            transition: transform 0.2s;
+        }
+        .gift-box:active { transform: scale(0.9) rotate(0deg) !important; animation: none; }
+
+        @keyframes gentle-shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(3deg); }
+            50% { transform: rotate(-3deg); }
+            75% { transform: rotate(2deg); }
+        }
+
+        /* อนิเมชั่นตอนกดเลือก (แรงขึ้น) */
+        .box-selected-shake { animation: box-selected-shake 0.8s ease-in-out; }
+        @keyframes box-selected-shake {
             0%, 100% { transform: scale(1) rotate(0); }
             20% { transform: scale(1.1) rotate(15deg); }
             40% { transform: scale(1.1) rotate(-15deg); }
@@ -191,20 +209,22 @@
                     <img src="photo6.jpg" class="img-item p6" onclick="zoomImg(this, 'สาวหวานน')">
                     <img src="photo7.jpg" class="img-item p7" onclick="zoomImg(this, 'โอ้ะน่าร้ากก')">
                     <img src="photo8.jpg" class="img-item p8" onclick="zoomImg(this, 'มีกำลังใจสอบระะ')">
-                    <img src="photo11.jpg" class="img-item p11" onclick="zoomImg(this, 'ม่ายรับรุ้')">
-                    <img src="photo10.jpg" class="img-item p10" onclick="zoomImg(this, 'ปัดเป๋เรยย')">
                     <img src="photo9.jpg" class="img-item p9" onclick="zoomImg(this, 'โอัะโอ่วว')">
+                    <img src="photo10.jpg" class="img-item p10" onclick="zoomImg(this, 'ปัดเป๋เรยย')">
+                    <img src="photo11.jpg" class="img-item p11" onclick="zoomImg(this, 'ม่ายรับรุ้')">
+                    <img src="photo12.jpg" class="img-item p12" onclick="zoomImg(this, 'แฟนไคคะะ')">
+                    <img src="photo13.jpg" class="img-item p13" onclick="zoomImg(this, 'ดอกไม้ช่อนี้น่ารักจัง')">
                 </div>
             </section>
 
             <section id="letter-sec">
                 <div class="envelope-container">
-                    <div class="tap-text" id="env-text">แตะเพื่ออ่านข้อความ ♡</div>
                     <div class="envelope" id="env" onclick="openLetter()">
                         <div class="paper" id="paper">
                             <div id="typewriter" style="font-size: 0.85rem; line-height: 1.6; color: #555;"></div>
                         </div>
                     </div>
+                    <div class="tap-text" id="env-text">แตะเพื่ออ่านข้อความ ♡</div>
                 </div>
             </section>
 
@@ -296,6 +316,7 @@
             }, 1000);
         }
 
+        // เอฟเฟกต์หัวใจลอยขึ้นมาตอนดูรูป
         function startFloatingHearts() {
             const container = document.getElementById('modal');
             const interval = setInterval(() => {
@@ -331,7 +352,7 @@
 
         function openLetter() {
             document.getElementById('env').classList.add('open');
-            document.getElementById('env-text').style.opacity = '0';
+            document.getElementById('env-text').style.opacity = '0'; // ซ่อนข้อความเมื่อเปิดจดหมาย
             const msg = "ไม่ต้องเก่งมากก็ได้ค่อยๆเติบโตไปพร้อมกัน\nเค้าจะคอยอยู่ข้างๆเธอเอง\nเธอหันมาก็จะเจอเค้าตลอดเลยนะ\nเค้าจะคอยซัพพอร์ตเธอในทุกๆเรื่อง\nจะไม่ปล่อยให้เธอต้องอยู่คนเดียว\nจะไม่ทำให้เธอต้องลำบากใจ\nจะคอยเป็นที่ระบายอารมณ์ให้เธอ\nเค้าคนนี้จะคอยอยู่ข้างๆเธอไปตลอดเองนะคะ\nตั้งแต่วันแรกจนถึงวันนี้ไม่เคยรู้สึก\nไม่โชคดีที่ได้เจอแต่กลับเป็นความโชคดี\nที่ไม่อยากให้หายไปไหนเลยอยู่ให้รักนานๆเลยนะ\nผ่านอะไรอีกหลายๆอย่างที่เรา ต้องเจอ\nในทางข้างหน้าไปด้วยกันนะ\nขอบคุณเธอที่เข้ามานะคะ\nเค้ารักเธอมาตลอดเลยก่อนรู้จักชื่อซะอีก\nเค้าขอให้เเฟนยิ้มเย้อๆ\nยิ้มแฟนสวยมากเรยนะคะ\nแย่จางงวันครบนี่ไม่ได้ยุด้วยกัน\nเเต่ยังรักเหมือเดอมนะคะะมากกว่าเดิมอีกก\nอย่าคิดว่าเค้าไม่รักเลยนะคะะ\nเค้ารักเธอที่สุดแล้วค่ะะ\n”กานต์สิริ..”🫠";
             let i = 0;
             if(document.getElementById('typewriter').innerHTML === "") {
@@ -348,8 +369,13 @@
 
         const prizes = ["ตามใจ 1 ชิ้น", "เจลลี่แคท", "ดอกไม้", "กล่องสุ่ม", "กล่องสุ่มดอกไม้เจลลี่เเคท"];
         function pickBox(el) {
-            if(el.innerText === "✨") return;
-            el.classList.add('box-shake');
+            if(el.innerText === "✨") return; // ป้องกันการกดซ้ำ
+            
+            // เปลี่ยนอนิเมชั่นเป็นแบบกดเลือก (แรงขึ้น)
+            el.style.animation = 'none'; // หยุดอนิเมชั่นเขย่าปกติ
+            el.offsetHeight; // Trigger reflow
+            el.classList.add('box-selected-shake');
+            
             setTimeout(() => {
                 const prize = prizes[Math.floor(Math.random()*prizes.length)];
                 document.getElementById('photo-area').style.display = 'none';
@@ -363,8 +389,9 @@
                     startFloatingHearts();
                 }, 10);
 
-                el.classList.remove('box-shake');
+                el.classList.remove('box-selected-shake');
                 el.innerText = "✨";
+                // ไม่กลับไปเขย่าอีกหลังจากเปิดแล้ว
             }, 800);
         }
 
