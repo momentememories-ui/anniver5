@@ -11,18 +11,68 @@
             --secondary: #ffcad4;
             --bg: #fff5f7;
             --text: #7a5c61;
+            --heart-color: rgba(255, 182, 193, 0.4); /* สีหัวใจพื้นหลัง */
         }
 
         body, html {
             margin: 0; padding: 0;
             font-family: 'Prompt', sans-serif;
             background-color: var(--bg);
-            background-image: radial-gradient(#ffcad4 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
+            /* ลบพื้นหลังจุดเดิมออก */
             color: var(--text);
             scroll-behavior: smooth;
             overflow-x: hidden;
+            position: relative; /* สำหรับหัวใจพื้นหลัง */
         }
+
+        /* --- Floating Hearts Background --- */
+        .heart-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; /* อยู่หลังเนื้อหา */
+            overflow: hidden; pointer-events: none; /* ไม่ให้รบกวนการคลิก */
+            display: none; /* ซ่อนก่อน login */
+        }
+        .heart-bg span {
+            position: absolute; display: block;
+            width: 20px; height: 20px; background: var(--heart-color);
+            transform: rotate(-45deg); animation: floatHeart 15s linear infinite;
+            opacity: 0; bottom: -50px;
+        }
+        .heart-bg span::before, .heart-bg span::after {
+            content: ''; position: absolute;
+            width: 20px; height: 20px; background: var(--heart-color); border-radius: 50%;
+        }
+        .heart-bg span::before { top: -10px; left: 0; }
+        .heart-bg span::after { top: 0; left: 10px; }
+
+        @keyframes floatHeart {
+            0% { bottom: -50px; opacity: 0; transform: rotate(-45deg) translateX(0); }
+            10% { opacity: 1; }
+            50% { transform: rotate(-45deg) translateX(100px); }
+            90% { opacity: 1; }
+            100% { bottom: 100%; opacity: 0; transform: rotate(-45deg) translateX(-100px); }
+        }
+        /* เพิ่มหัวใจหลายๆ ดวงด้วย delay และตำแหน่งต่างกัน */
+        .heart-bg span:nth-child(1) { left: 10%; animation-delay: 0s; width: 15px; height: 15px; }
+        .heart-bg span:nth-child(1)::before, .heart-bg span:nth-child(1)::after { width: 15px; height: 15px; }
+        .heart-bg span:nth-child(1)::before { top: -7.5px; } .heart-bg span:nth-child(1)::after { left: 7.5px; }
+        
+        .heart-bg span:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 12s; }
+        .heart-bg span:nth-child(3) { left: 40%; animation-delay: 4s; width: 10px; height: 10px; }
+        .heart-bg span:nth-child(3)::before, .heart-bg span:nth-child(3)::after { width: 10px; height: 10px; }
+        .heart-bg span:nth-child(3)::before { top: -5px; } .heart-bg span:nth-child(3)::after { left: 5px; }
+        
+        .heart-bg span:nth-child(4) { left: 55%; animation-delay: 6s; animation-duration: 18s; }
+        .heart-bg span:nth-child(5) { left: 70%; animation-delay: 8s; width: 25px; height: 25px; }
+        .heart-bg span:nth-child(5)::before, .heart-bg span:nth-child(5)::after { width: 25px; height: 25px; }
+        .heart-bg span:nth-child(5)::before { top: -12.5px; } .heart-bg span:nth-child(5)::after { left: 12.5px; }
+        
+        .heart-bg span:nth-child(6) { left: 85%; animation-delay: 10s; }
+        .heart-bg span:nth-child(7) { left: 15%; animation-delay: 12s; width: 12px; height: 12px; }
+        .heart-bg span:nth-child(7)::before, .heart-bg span:nth-child(7)::after { width: 12px; height: 12px; }
+        .heart-bg span:nth-child(7)::before { top: -6px; } .heart-bg span:nth-child(7)::after { left: 6px; }
+
+        .heart-bg span:nth-child(8) { left: 50%; animation-delay: 14s; animation-duration: 20s; }
 
         /* --- Login Page --- */
         #login-page {
@@ -47,7 +97,7 @@
 
         /* --- Main Content --- */
         #main-app { display: none; padding-bottom: 120px; }
-        section { min-height: 100vh; padding: 40px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        section { min-height: 100vh; padding: 40px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 1; }
 
         .calendar-wrap { display: flex; gap: 10px; margin-bottom: 10px; }
         .calendar-card {
@@ -65,14 +115,16 @@
         }
         .clock-val { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
 
-        /* --- Photo Grid (HEART SHAPE 11 IMAGES) --- */
+        /* --- Photo Grid (BIGGER HEART SHAPE 11 IMAGES) --- */
         .heart-grid { 
             display: grid; 
-            grid-template-columns: repeat(5, 65px); 
-            grid-template-rows: repeat(5, 65px); 
-            gap: 10px; margin: 0 auto;
+            /* เพิ่มขนาดคอลัมน์และแถว */
+            grid-template-columns: repeat(5, 75px); 
+            grid-template-rows: repeat(5, 75px); 
+            gap: 12px; margin: 0 auto;
         }
-        .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; }
+        .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 3px solid white; box-shadow: 0 6px 18px rgba(0,0,0,0.12); cursor: pointer; transition: transform 0.2s; }
+        .img-item:hover { transform: scale(1.05); z-index: 2; } /* ขยายเล็กน้อยเมื่อ hover */
         
         /* Heart Positions for 11 images */
         .p1 { grid-column: 2; grid-row: 1; }
@@ -107,13 +159,17 @@
             80% { transform: scale(1.1) rotate(-10deg); }
         }
 
-        /* --- UI Elements --- */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); z-index: 10000; align-items: center; justify-content: center; }
-        .modal.active { display: flex; }
-        .modal-content { display: flex; flex-direction: column; align-items: center; }
-        .polaroid { background: white; padding: 12px 12px 50px 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border-radius: 2px; max-width: 240px; position: relative; }
-        .polaroid img { width: 100%; height: auto; }
-        .polaroid-text { font-family: 'Kanit', sans-serif; font-size: 0.9rem; color: #666; margin-top: 15px; text-align: center; }
+        /* --- Modal & UI --- */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal.active { display: flex; opacity: 1; }
+        
+        /* อนิเมชั่นสำหรับเนื้อหาโมดอล (Polaroid) */
+        .modal-content { display: flex; flex-direction: column; align-items: center; transform: scale(0.7); transition: transform 0.3s ease; }
+        .modal.active .modal-content { transform: scale(1); }
+
+        .polaroid { background: white; padding: 12px 12px 50px 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border-radius: 2px; max-width: 280px; position: relative; border: 1px solid #f0f0f0; }
+        .polaroid img { width: 100%; height: auto; display: block; border-radius: 2px; }
+        .polaroid-text { font-family: 'Kanit', sans-serif; font-size: 1rem; color: #666; margin-top: 18px; text-align: center; font-weight: 400; }
         
         .ticket { width: 280px; background: white; border-radius: 15px; box-shadow: 0 15px 35px rgba(143, 143, 163, 0.3); border: 2px solid var(--primary); overflow: hidden; }
         .ticket-header { background: var(--primary); color: white; padding: 10px; font-size: 0.7rem; font-weight: 600; text-align: center; }
@@ -123,13 +179,18 @@
 
         nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.95); padding: 10px 25px; border-radius: 40px; display: flex; gap: 20px; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         nav a { text-decoration: none; font-size: 24px; }
-        .btn-close { background: var(--primary); color: white; border: none; padding: 10px 30px; border-radius: 25px; cursor: pointer; margin-top: 20px; font-family: 'Prompt'; }
+        .btn-close { background: var(--primary); color: white; border: none; padding: 10px 30px; border-radius: 25px; cursor: pointer; margin-top: 25px; font-family: 'Prompt'; font-weight: 600; box-shadow: 0 4px 10px rgba(255, 143, 163, 0.3); }
         
         .emoji-fly { position: absolute; pointer-events: none; font-size: 28px; animation: flyUp 2.5s ease-out forwards; z-index: 10001; }
         @keyframes flyUp { 0% { transform: translateY(0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-400px) rotate(20deg) scale(1.5); opacity: 0; } }
     </style>
 </head>
 <body>
+
+    <div class="heart-bg" id="heart-bg">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+    </div>
 
     <div id="login-page">
         <h3 style="font-weight: 300; color: var(--primary); margin-bottom: 10px;">Enter Password ♡</h3>
@@ -161,7 +222,7 @@
         </section>
 
         <section id="photo-sec">
-            <h2 style="font-family: 'Prompt'; font-size: 1.4rem; color: var(--primary); margin-bottom: 35px; text-align: center;">Happy Anniversary</h2>
+            <h2 style="font-family: 'Prompt'; font-size: 1.6rem; color: var(--primary); margin-bottom: 40px; text-align: center;">Happy Anniversary</h2>
             <div class="heart-grid">
                 <img src="photo1.jpg" class="img-item p1" onclick="zoomImg(this, 'น่ารักจังคะ')">
                 <img src="photo2.jpg" class="img-item p2" onclick="zoomImg(this, 'มีคนคิดถึงมาหา')">
@@ -207,7 +268,7 @@
     </div>
 
     <div id="modal" class="modal">
-        <div class="modal-content" id="modal-box">
+        <div class="modal-content" id="modal-box-content">
             <div id="photo-area">
                 <div class="polaroid">
                     <img id="modal-img" src="">
@@ -244,6 +305,7 @@
                     if(pass === target) {
                         document.getElementById('login-page').style.display = 'none';
                         document.getElementById('main-app').style.display = 'block';
+                        document.getElementById('heart-bg').style.display = 'block'; // แสดงพื้นหลังหัวใจ
                         document.getElementById('bgm').play().catch(() => {});
                         startTimer();
                     } else {
@@ -284,7 +346,7 @@
 
         function openLetter() {
             document.getElementById('env').classList.add('open');
-            const msg = "ไม่ต้องเก่งมากก็ได้ค่อยๆเติบโตไปพร้อมกัน\nเค้าจะคอยอยู่ข้างๆเธอเอง\nเธอหันมาก็จะเจอเค้าตลอดเลยนะ\nเค้าจะคอยซัพพอร์ตเธอในทุกๆเรื่อง\nจะไม่ปล่อยให้เธอต้องอยู่คนเดียว\nจะไม่ทำให้เธอต้องลำบากใจ\nจะคอยเป็นที่ระบายอารมณ์ให้เธอ\nเค้าคนนี้จะคอยอยู่ข้างๆเธอไปตลอดเองนะคะ\nตั้งแต่วันแรกจนถึงวันนี้ไม่เคยรู้สึก\nไม่โชคดีที่ได้เจอแต่กลับเป็นความโชคดี\nที่ไม่อยากให้หายไปไหนเลยอยู่ให้รักนานๆเลยนะ\nผ่านอะไรอีกหลายๆอย่างที่เรา ต้องเจอ\nในทางข้างหน้าไปด้วยกันนะ\nขอบคุณเธอที่เข้ามานะคะ\nเค้ารักเธอมาตลอดเลยก่อนรู้จักชื่อซะอีก\nเค้าขอให้เเฟนยิ้มเย้อๆ\nอวดแฟนสวยมากเรยนะคะ\nแย่จางงวันครบนี่ไม่ได้ยุด้วยกัน\nเเต่ยังรักเหมือเดอมนะคะะมากกว่าเดิมอีกก\nอย่าคิดว่าเค้าไม่รักเลยนะคะะ\nเค้ารักเธอที่สุดแล้วค่ะะ\n”กานต์สิริ..”🫠";
+            const msg = "ไม่ต้องเก่งมากก็ได้ค่อยๆเติบโตไปพร้อมกัน\nเค้าจะคอยอยู่ข้างๆเธอเอง\nเธอหันมาก็จะเจอเค้าตลอดเลยนะ\nเค้าจะคอยซัพพอร์ตเธอในทุกๆเรื่อง\nจะไม่ปล่อยให้เธอต้องอยู่คนเดียว\nจะไม่ทำให้เธอต้องลำบากใจ\nจะคอยเป็นที่ระบายอารมณ์ให้เธอ\nเค้าคนนี้จะคอยอยู่ข้างๆเธอไปตลอดเองนะคะ\nตั้งแต่วันแรกจนถึงวันนี้ไม่เคยรู้สึก\nไม่โชคดีที่ได้เจอแต่กลับเป็นความโชคดี\nที่ไม่อยากให้หายไปไหนเลยอยู่ให้รักนานๆเลยนะ\nผ่านอะไรอีกหลายๆอย่างที่เรา ต้องเจอ\nในทางข้างหน้าไปด้วยกันนะ\nขอบคุณเธอที่เข้ามานะคะ\nเค้ารักเธอมาตลอดเลยก่อนรู้จักชื่อซะอีก\nเค้าขอให้เเฟนยิ้มเย้อๆ\nยิ้มแฟนสวยมากเรยนะคะ\nแย่จางงวันครบนี่ไม่ได้ยุด้วยกัน\nเเต่ยังรักเหมือเดอมนะคะะมากกว่าเดิมอีกก\nอย่าคิดว่าเค้าไม่รักเลยนะคะะ\nเค้ารักเธอที่สุดแล้วค่ะะ\n”กานต์สิริ..”🫠";
             let i = 0;
             if(document.getElementById('typewriter').innerHTML === "") {
                 function type() {
