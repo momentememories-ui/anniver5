@@ -69,10 +69,9 @@
         }
         .clock-val { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); }
 
-        /* --- Photo Grid (NEW PROPORTIONAL HEART SHAPE) --- */
+        /* --- Photo Grid (TARGETED HEART SHAPE) --- */
         .heart-grid { 
             display: grid; 
-            /* ปรับให้เป็น 17vmin เพื่อให้แต่ละช่องเป็นสี่เหลี่ยมจัตุรัสและสมส่วน */
             grid-template-columns: repeat(5, 17vmin); 
             grid-template-rows: repeat(6, 17vmin); 
             gap: 1.5vmin; 
@@ -83,30 +82,27 @@
         .img-item { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s; }
         .img-item:active { transform: scale(0.95); }
         
-        /* Heart Positions for 13 images with new proportional layout */
-        /* Row 1: 2 images */
-        .p1 { grid-column: 2; grid-row: 1; } 
-        .p2 { grid-column: 4; grid-row: 1; }
-        
-        /* Row 2: 5 images */
-        .p3 { grid-column: 1; grid-row: 2; } 
-        .p4 { grid-column: 2; grid-row: 2; }
-        .p5 { grid-column: 3; grid-row: 2; } 
-        .p6 { grid-column: 4; grid-row: 2; }
+        /* Heart Positions (2-5-3-2-1) */
+        /* Row 1: OK */
+        .p1 { grid-column: 2; grid-row: 1; } .p2 { grid-column: 4; grid-row: 1; }
+        /* Row 2: OK */
+        .p3 { grid-column: 1; grid-row: 2; } .p4 { grid-column: 2; grid-row: 2; }
+        .p5 { grid-column: 3; grid-row: 2; } .p6 { grid-column: 4; grid-row: 2; }
         .p7 { grid-column: 5; grid-row: 2; } 
-        
-        /* Row 3: 3 images */
+        /* Row 3: OK */
         .p8 { grid-column: 2; grid-row: 3; } 
-        .p11 { grid-column: 3; grid-row: 3; } /* Center in Row 3 */
+        .p11 { grid-column: 3; grid-row: 3; } 
         .p10 { grid-column: 4; grid-row: 3; }
         
-        /* Row 4: 2 images */
-        .p12 { grid-column: 2; grid-row: 4; }
-        .p13 { grid-column: 4; grid-row: 4; }
+        /* Row 4: [RED] Two new photos (12, 13) */
+        .p12 { grid-column: 2; grid-row: 4; } /* Left red spot */
+        .p13 { grid-column: 4; grid-row: 4; } /* Right red spot */
         
-        /* Row 5: 1 image (Tip) */
-        .p9 { grid-column: 3; grid-row: 6; } /* Lower tip */
-        .p13_extra { grid-column: 3; grid-row: 5; display: none; } /* Reserve spot to keep shape */
+        /* Row 5: [GREEN] One photo (9) at tip */
+        .p9 { grid-column: 3; grid-row: 5; } /* Lower green tip */
+        
+        /* Dummy spot to maintain grid spacing */
+        .grid-dummy { grid-column: 3; grid-row: 6; visibility: hidden; }
 
         /* --- Envelope & Paper --- */
         .envelope-container { position: relative; height: 450px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
@@ -230,6 +226,8 @@
                     <img src="photo12.jpg" class="img-item p12" onclick="zoomImg(this, 'รักกก')">
                     <img src="photo13.jpg" class="img-item p13" onclick="zoomImg(this, 'ที่สุด')">
                     <img src="photo9.jpg" class="img-item p9" onclick="zoomImg(this, 'โอัะโอ่วว')">
+                    
+                    <div class="grid-dummy"></div>
                 </div>
             </section>
 
@@ -387,7 +385,7 @@
         function pickBox(el) {
             if(el.innerText === "✨") return; // ป้องกันการกดซ้ำ
             
-            // เปลี่ยนอนิเมชั่นเป็นแบบกดเลือก (แรงขึ้น)
+            // เปลี่ยนอนิเมชั่นเป็นแบบกดเลือก (แรงขึ้น) OK
             el.style.animation = 'none'; // หยุดอนิเมชั่นเขย่าปกติ
             el.offsetHeight; // Trigger reflow
             el.classList.add('box-selected-shake');
